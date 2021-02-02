@@ -11,17 +11,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:orientation="vertical"
         android:gravity="center">
 
-        <EditText
-            android:id="@+id/edtNombre"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:autofillHints="@string/app_name"
-            android:hint="@string/nombre"
-            android:inputType="text" />
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nombre"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:layout_marginEnd="40dp"/>
+            <EditText
+                android:id="@+id/edtNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints="@string/app_name"
+                android:hint="@string/nombre"
+                android:inputType="text" />
+        </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/black" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tipo"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:layout_marginEnd="40dp"/>
         <EditText
             android:id="@+id/edtTipo"
             android:layout_width="wrap_content"
@@ -29,6 +59,13 @@
             android:autofillHints="@string/app_name"
             android:hint="@string/tipo"
             android:inputType="text" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/black" />
     </LinearLayout>
 
     <Button
@@ -48,15 +85,22 @@
         android:text="@string/nada"
         android:visibility="gone" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/black" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerGastos"
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
         </androidx.recyclerview.widget.RecyclerView>
     </ScrollView>

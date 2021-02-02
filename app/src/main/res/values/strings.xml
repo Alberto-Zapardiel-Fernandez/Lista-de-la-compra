@@ -5,4 +5,9 @@
     <string name="nombre">Nombre</string>
     <string name="insertar">Insertar</string>
     <string name="nada">No hay nada</string>
+    <string name="campos_vacios">Campos vacios</string>
+    <string name="borrado">Borrado</string>
+    <string name="quieres_borrar">¿Quieres borrarlo?</string>
+    <string name="nombre2">Nombre:</string>
+    <string name="tipo2">Tipo:</string>
 </resources>

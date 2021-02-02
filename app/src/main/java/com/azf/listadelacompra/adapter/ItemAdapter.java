@@ -78,6 +78,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Item = Items.get(position);
         holder.txtNombre2.setText(Item.getNombre());
         holder.txtTipo2.setText(Item.getTipo());
+        holder.linearFondo.setBackgroundResource(R.color.green);
     }
 
 

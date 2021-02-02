@@ -19,9 +19,11 @@ public class FBSync {
     }
     public static void insertar(Context context, String nombre, String tipo) {
         Map<String,Object> map = new HashMap<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference(Utils.PATH);
         map.put("nombre",nombre);
         map.put("tipo",tipo);
-        databaseReference.child(Utils.PATH).setValue(map).addOnSuccessListener(aVoid -> Toast.makeText(context, context.getString(R.string.insertado), Toast.LENGTH_SHORT).show());
+        String key = databaseReference.push().getKey();
+        map.put("key",key);
+        databaseReference.child(key).setValue(map).addOnSuccessListener(aVoid -> Toast.makeText(context, context.getString(R.string.insertado), Toast.LENGTH_SHORT).show());
     }
 }
