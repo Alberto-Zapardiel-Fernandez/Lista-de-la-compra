@@ -3,6 +3,7 @@ package com.azf.listadelacompra.vista;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,7 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,9 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         mContext = this;
         initViews();
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         guardarItems();
+        if (items.size() == 0) {
+            txtNada.setVisibility(View.VISIBLE);
+        } else {
+            txtNada.setVisibility(View.GONE);
+        }
     }
+
     private void initRecycler(ArrayList<Item> items) {
         if (items.size() == 0) {
             recyclerView.setVisibility(View.GONE);
@@ -73,7 +78,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Utils.PATH);
         ref.child(item.getKey()).removeValue().addOnSuccessListener(aVoid -> {
             items.remove(position);
-            guardarItems();
+            if (items.size() > 0) {
+                guardarItems();
+            } else {
+                showRecycler();
+            }
             Toast.makeText(mContext, R.string.borrado, Toast.LENGTH_SHORT).show();
         });
     }
@@ -96,6 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 FBSync.insertar(mContext, nombre, tipo);
                 edtTipo.setText("");
                 edtNombre.setText("");
+                edtNombre.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edtTipo.getWindowToken(), 0);
             } else {
                 Toast.makeText(this, getString(R.string.campos_vacios), Toast.LENGTH_SHORT).show();
             }
@@ -127,7 +139,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String nombre = dataSnapshot.child(Utils.NOMBRE).getValue().toString();
         String tipo = dataSnapshot.child(Utils.TIPO).getValue().toString();
         String key = dataSnapshot.getKey();
-        items.add(new Item(nombre,tipo,key));
+        items.add(new Item(nombre, tipo, key));
+        showRecycler();
+    }
+
+    private void showRecycler() {
         initRecycler(items);
         if (items.size() == 0) {
             txtNada.setVisibility(View.VISIBLE);
