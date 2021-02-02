@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "884437890486",
+    "project_id": "lista-de-la-compra-42b25",
+    "storage_bucket": "lista-de-la-compra-42b25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884437890486:android:8ef5d7fcf801f1dff3bd17",
+        "android_client_info": {
+          "package_name": "com.azf.listadelacompra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884437890486-3vhja9o3k2mr4govasdi06ummhlgfabr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7rYMnDqDFODbiRm4-DN224UNT3dpAe4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884437890486-3vhja9o3k2mr4govasdi06ummhlgfabr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
