@@ -1,5 +1,7 @@
 package com.azf.listadelacompra.item;
 
+import java.util.Comparator;
+
 public class Item {
 
     private String nombre, tipo, key;
@@ -33,4 +35,11 @@ public class Item {
     public void setKey(String key) {
         this.key = key;
     }
+
+    public static Comparator<Item> ordenarPorTipo = new Comparator<Item>() {
+        @Override
+        public int compare(Item item1, Item item2) {
+            return item1.getTipo().compareTo(item2.getTipo());
+        }
+    };
 }

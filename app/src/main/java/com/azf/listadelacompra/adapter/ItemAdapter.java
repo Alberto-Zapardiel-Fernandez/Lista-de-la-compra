@@ -22,7 +22,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private final ArrayList<com.azf.listadelacompra.item.Item> Items;
     private final int resource;
-    Item Item;
+    Item item;
     private OnItemClickListener mListener;
 
     //Interfaz para asignar los métodos que tendrá
@@ -39,7 +39,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtNombre2, txtTipo2;
+        public TextView txtNombre2, txtTipo2, txtOrdenTipo;
         public View view;
         public ImageButton btnBorrar;
         public LinearLayout linearFondo;
@@ -50,6 +50,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             this.txtNombre2 = view.findViewById(R.id.txtNombre2);
             this.txtTipo2 = view.findViewById(R.id.txtTipo2);
             this.linearFondo = view.findViewById(R.id.linearFondo);
+            this.txtOrdenTipo = view.findViewById(R.id.txtOrdenTipo);
             this.btnBorrar = view.findViewById(R.id.btnBorrar);
             this.btnBorrar. setOnClickListener(view1 -> {
                 if (listener != null){
@@ -75,9 +76,18 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Item = Items.get(position);
-        holder.txtNombre2.setText(Item.getNombre());
-        holder.txtTipo2.setText(Item.getTipo());
+        item = Items.get(position);
+        if (position==0){
+            holder.txtOrdenTipo.setText(item.getTipo());
+        }else {
+            if (!Items.get(position-1).getTipo().equalsIgnoreCase(item.getTipo())){
+                holder.txtOrdenTipo.setText(item.getTipo());
+            }else {
+                holder.txtOrdenTipo.setVisibility(View.GONE);
+            }
+        }
+        holder.txtNombre2.setText(item.getNombre());
+        holder.txtTipo2.setText(item.getTipo());
         holder.linearFondo.setBackgroundResource(R.color.green);
     }
 

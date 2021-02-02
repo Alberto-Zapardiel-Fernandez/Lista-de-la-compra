@@ -52,13 +52,13 @@
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 android:layout_marginEnd="40dp"/>
-        <EditText
-            android:id="@+id/edtTipo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/app_name"
-            android:hint="@string/tipo"
-            android:inputType="text" />
+
+            <Spinner
+                android:id="@+id/spinnerTipo"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -90,6 +90,7 @@
         android:layout_height="1dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/black" />
     <ScrollView
         android:layout_width="match_parent"
@@ -100,7 +101,8 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:paddingBottom="22dp">
 
         </androidx.recyclerview.widget.RecyclerView>
     </ScrollView>

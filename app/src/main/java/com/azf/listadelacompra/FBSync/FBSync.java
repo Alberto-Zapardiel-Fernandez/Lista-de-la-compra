@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.azf.listadelacompra.R;
-import com.azf.listadelacompra.utils.Utils;
+import com.azf.listadelacompra.utils.Constantes;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,7 +19,7 @@ public class FBSync {
     }
     public static void insertar(Context context, String nombre, String tipo) {
         Map<String,Object> map = new HashMap<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference(Utils.PATH);
+        databaseReference = FirebaseDatabase.getInstance().getReference(Constantes.PATH);
         map.put("nombre",nombre);
         map.put("tipo",tipo);
         String key = databaseReference.push().getKey();

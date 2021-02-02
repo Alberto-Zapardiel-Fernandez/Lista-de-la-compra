@@ -10,4 +10,5 @@
     <string name="quieres_borrar">¿Quieres borrarlo?</string>
     <string name="nombre2">Nombre:</string>
     <string name="tipo2">Tipo:</string>
+    <string name="salir">Pulsa de nuevo para salir</string>
 </resources>
