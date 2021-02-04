@@ -2,6 +2,7 @@ package com.azf.listadelacompra.vista;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,6 +23,7 @@ import com.azf.listadelacompra.FBSync.FBSync;
 import com.azf.listadelacompra.R;
 import com.azf.listadelacompra.adapter.ItemAdapter;
 import com.azf.listadelacompra.item.Item;
+import com.azf.listadelacompra.usuario.Usuario;
 import com.azf.listadelacompra.utils.Constantes;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,11 +48,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txtNada;
     private Spinner spinner;
     private static int contador;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences preferences = getSharedPreferences(Constantes.DATOS, Context.MODE_PRIVATE);
+        if (getIntent().getExtras()!=null){
+            Usuario usuario = (Usuario) getIntent().getSerializableExtra(Constantes.USUARIO);
+            email = usuario.getEmail().replaceAll("[^a-zA-Z0-9]","");
+            SharedPreferences.Editor objEditor = preferences.edit();
+            objEditor.putString(Constantes.EMAILPATH, email);
+            objEditor.putString(Constantes.NOMBREUSUARIO, usuario.getNombre());
+            objEditor.apply();
+        }else{
+            email = preferences.getString(Constantes.EMAILPATH,null);
+        }
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.bienvenido)+""+ preferences.getString(Constantes.NOMBREUSUARIO,Constantes.INVITADO)+"!");
         contador = 0;
         mContext = this;
         initViews();
@@ -65,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void removeItem(int position) {
         Item item = items.get(position);
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constantes.PATH);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constantes.PATH).child(email);
         ref.child(item.getKey()).removeValue().addOnSuccessListener(aVoid -> {
             items.remove(position);
             guardarItems();
@@ -100,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String nombre = edtNombre.getText().toString();
             String tipo = spinner.getSelectedItem().toString();
             if (nombre.length() > 0 && tipo.length() > 0) {
-                FBSync.insertar(mContext, nombre, tipo);
+                FBSync.insertar(mContext, nombre, tipo, email);
                 edtNombre.setText("");
                 edtNombre.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -114,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void guardarItems() {
         clearData();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constantes.PATH);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constantes.PATH).child(email);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -174,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         if (contador == 0){
-            Toast.makeText(mContext, getString(R.string.salir), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, getString(R.string.pulsa_de_nuevo_para_salir), Toast.LENGTH_SHORT).show();
             contador++;
         }else {
             finishAffinity();

@@ -17,13 +17,13 @@ public class FBSync {
 
     public FBSync(){
     }
-    public static void insertar(Context context, String nombre, String tipo) {
+    public static void insertar(Context context, String nombre, String tipo, String usuario) {
         Map<String,Object> map = new HashMap<>();
         databaseReference = FirebaseDatabase.getInstance().getReference(Constantes.PATH);
         map.put("nombre",nombre);
         map.put("tipo",tipo);
         String key = databaseReference.push().getKey();
         map.put("key",key);
-        databaseReference.child(key).setValue(map).addOnSuccessListener(aVoid -> Toast.makeText(context, context.getString(R.string.insertado), Toast.LENGTH_SHORT).show());
+        databaseReference.child(usuario).child(key).setValue(map).addOnSuccessListener(aVoid -> Toast.makeText(context, context.getString(R.string.insertado), Toast.LENGTH_SHORT).show());
     }
 }
